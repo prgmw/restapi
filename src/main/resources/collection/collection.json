@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "7fa356ba-4cf3-4a98-b018-9ac293f89e40",
+		"name": "Mongo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2514526"
+	},
+	"item": [
+		{
+			"name": "Obter Item com Filtro",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/itens/filter?nome=paulo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"itens",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "paulo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter Todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/itens/filter?nome=paulo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"itens",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "paulo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Item",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/itens/filter?nome=paulo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"itens",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "paulo"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
