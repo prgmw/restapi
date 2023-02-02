@@ -11,6 +11,8 @@ services:
       - '27017:27017'
     volumes:
       - /opt/docker/volumes/mongoDB:/data/db
+    networks:
+      - main-network
   mongo-express:
     container_name: mongo-express
     image: mongo-express:0.54.0
@@ -24,3 +26,29 @@ services:
       - ME_CONFIG_BASICAUTH_PASSWORD=admin
     ports:
       - '8081:8081'
+    networks:
+      - main-network
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: prgmw/restapi
+    container_name: restapi
+    restart: on-failure
+    depends_on:
+      - mongodb
+    ports:
+      - "8000:8000"
+    environment:
+      - SERVER_PORT=8000
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_DATA_MONGODB_USERNAME=admin
+      - SPRING_DATA_MONGODB_PASSWORD=pass
+      - SPRING_DATA_MONGODB_DATABASE=admin
+    networks:
+      - main-network
+
+networks:
+  main-network:
+    driver: bridge
