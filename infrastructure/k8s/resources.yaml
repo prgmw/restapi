@@ -51,11 +51,11 @@ spec:
         - name: mongo
           image: mongo:4.2.12
           env:
-            - name: "MONGO_INITDB_DATABASE"
-              value: "restapi"
-            - name: "MONGO_INITDB_ROOT_USERNAME"
+            - name: MONGO_INITDB_DATABASE
+              value: "auth"
+            - name: MONGO_INITDB_ROOT_USERNAME
               value: "admin"
-            - name: "MONGO_INITDB_ROOT_PASSWORD"
+            - name: MONGO_INITDB_ROOT_PASSWORD
               value: "pass"
           volumeMounts:
             - mountPath: /opt/docker/volumes/mongoDB
