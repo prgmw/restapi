@@ -29,18 +29,15 @@ services:
     networks:
       - main-network
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: prgmw/restapi
+    image: prgmw/restapi:latest
     container_name: restapi
     restart: on-failure
     depends_on:
       - mongodb
     ports:
-      - "8000:8000"
+      - "8080:8080"
     environment:
-      - SERVER_PORT=8000
+      - SERVER_PORT=8080
       - SPRING_DATA_MONGODB_HOST=mongodb
       - SPRING_DATA_MONGODB_PORT=27017
       - SPRING_DATA_MONGODB_USERNAME=admin

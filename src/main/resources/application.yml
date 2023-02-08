@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: restapi
+  server:
+    port: 8080
+  data:
+    mongodb:
+      host: '${MONGO_HOST}'
+      authentication-database: admin
+      database: restapi
+      port: 27017
+      username: '${MONGO_USERNAME}'
+      password: '${MONGO_PASSWORD}'
