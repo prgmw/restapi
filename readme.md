@@ -27,7 +27,7 @@
         sudo kind create cluster
 
         sudo kubectl apply -f secret.yaml
-        sudo kubectl apply -f manyfest.yaml
+        sudo kubectl apply -f resources.yaml
 
         sudo kubectl port-forward svc/restapi-service 8080:8080
 

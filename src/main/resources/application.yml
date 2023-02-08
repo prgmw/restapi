@@ -7,7 +7,7 @@ spring:
     mongodb:
       host: '${MONGO_HOST}'
       authentication-database: admin
-      database: restapi
+      database: admin
       port: 27017
       username: '${MONGO_USERNAME}'
       password: '${MONGO_PASSWORD}'
