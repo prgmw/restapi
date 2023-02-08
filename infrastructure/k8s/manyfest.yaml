@@ -1,0 +1,115 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: restapi-service
+  labels:
+    run: restapi-service
+spec:
+  type: NodePort
+  selector:
+    app: restapi
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+  labels:
+    run: mongo-service
+spec:
+  selector:
+    app: mongo
+  ports:
+    - port: 27017
+      targetPort: 27017
+      protocol: TCP
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+spec:
+  replicas: 1
+  serviceName: mongo
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:4.2.12
+          env:
+            - name: "MONGO_INITDB_DATABASE"
+              value: "restapi"
+            - name: "MONGO_INITDB_ROOT_USERNAME"
+              value: "admin"
+            - name: "MONGO_INITDB_ROOT_PASSWORD"
+              value: "pass"
+          volumeMounts:
+            - mountPath: /opt/docker/volumes/mongoDB
+              name: mongo-volume
+
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: restapi
+  template:
+    metadata:
+      labels:
+        app: restapi
+    spec:
+      containers:
+        - name: restapi
+          image: prgmw/restapi:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: host
+            - name: MONGO_DB
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: database
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: username
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: password
