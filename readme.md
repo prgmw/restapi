@@ -21,13 +21,18 @@
     sudo kubectl describe deployment deployment_name
     sudo kubectl rollout undo deployment deployment_name
     sudo kubectl delete svc service_name
+    sudo kubectl top pod -A
+    sudo kubectl get hpa
 
     ** Create **
 
         sudo kind create cluster
 
-        sudo kubectl apply -f secret.yaml
+        sudo kubectl apply -f secret.yaml        
         sudo kubectl apply -f resources.yaml
+        sudo kubectl apply -f hpa.yaml
+        sudo kubectl apply -f metrics-server.yaml
+
 
         sudo kubectl port-forward svc/restapi-service 8080:8080
 
@@ -44,11 +49,11 @@
 
 # mongo
 
-    sudo kubectl exec -it mongo-0 -- mongo -u admin -p --authenticationDatabase admin
-    
+    sudo kubectl exec -it mongo-0 -- mongo -u root -p --authenticationDatabase admin
+      
     use restapi
 
-    db.createUser({ user:'user',pwd:'pass',roles:[ { role:'readWrite', db: 'restapi'}]});
+    db.createUser({ user:'app',pwd:'app',roles:[ { role:'userAdmin', db: 'admin'}, { role:'dbAdmin', db: 'admin'}, { role:'readWrite', db: 'admin'}]});
     db.auth('user','pass')  
 
 

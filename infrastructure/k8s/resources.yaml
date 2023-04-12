@@ -51,12 +51,10 @@ spec:
         - name: mongo
           image: mongo:4.2.12
           env:
-            - name: MONGO_INITDB_DATABASE
-              value: "auth"
             - name: MONGO_INITDB_ROOT_USERNAME
-              value: "admin"
+              value: "root"
             - name: MONGO_INITDB_ROOT_PASSWORD
-              value: "pass"
+              value: "root"
           volumeMounts:
             - mountPath: /opt/docker/volumes/mongoDB
               name: mongo-volume
@@ -90,8 +88,35 @@ spec:
       containers:
         - name: restapi
           image: prgmw/restapi:latest
+
+          resources:
+            requests:
+              cpu: 500m
+              memory: 500Mi
+            limits:
+              cpu: 1000m
+              memory: 1000Mi
+
           ports:
             - containerPort: 8080
+#          startupProbe:
+#            httpGet:
+#              path: actuator/health
+#              port: 8000
+#            periodSeconds: 5
+#            failureThreshold: 30
+#          redinessProbe:
+#            httpGet:
+#              path: actuator/health
+#              port: 8000
+#            periodSeconds: 5
+#            failureThreshold: 1
+#          livenessProbe:
+#            httpGet:
+#              path: actuator/health
+#              port: 8000
+#            periodSeconds: 5
+#            failureThreshold: 1
           env:
             - name: MONGO_HOST
               valueFrom:
